@@ -4,15 +4,6 @@
     <div class="container">
         <br>
         <div class="row justify-content-center">
-            {{-- <div class="col-md-6">
-                <h2>Todos List</h2>
-            </div>
-            <div class="col-md-6">
-                <div class="pull-right">
-                    <a href="{{ route('todo.create') }}" class="btn btn-primary"><i class="fa fa-plus"></i> Add new todo</a>
-                </div>
-            </div> --}}
-
             <div class="row">
                 <div class="col-lg-12 margin-tb">
                     <div class="pull-left">
