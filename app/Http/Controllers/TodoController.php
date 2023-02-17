@@ -29,14 +29,18 @@ class TodoController extends Controller
 
     public function store(Request $request)
     {
-        //getting the user id
         $userId = Auth::user()->id;
-        //getting the user entered input using $request
-        $input = $request->input();
-        //extracting the user_id from the input
-        $input['user_id'] = $userId;
-        //setting the todo status from the input 
-        $todoStatus = Todo::create($input);
+
+        // Validate the user's input
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'status' => 'required',
+        ]);
+
+        // Add the user_id to the validated data
+        $validatedData['user_id'] = $userId;
+        $todoStatus = Todo::create($validatedData);
         //checking the todo status
         if ($todoStatus) {
             //if true the show a success message
@@ -50,7 +54,7 @@ class TodoController extends Controller
     }
 
     //show function
- 
+
     public function show($id)
     {
         //user_id
@@ -65,7 +69,7 @@ class TodoController extends Controller
         //return the todo/view.blade.php and pass the todo 
         return view('todo.view', ['todo' => $todo]);
     }
- 
+
 
     //edit function
     public function edit($id)
@@ -85,6 +89,8 @@ class TodoController extends Controller
     //update function
     public function update(Request $request, $id)
     {
+
+
         //user_id
         $userId = Auth::user()->id;
         //find todo by the id from the (url/params)
@@ -94,24 +100,25 @@ class TodoController extends Controller
         if (!$todo) {
             return redirect('todo')->with('error', 'Todo not found.');
         }
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'status' => 'required',
+        ]);
         //getting the inputs
-        $input = $request->input();
-        //extracting the user id
-        $input['user_id'] = $userId;
-        //updating the todo status
-        $todoStatus = $todo->update($input);
+        $validatedData['user_id'] = $userId;
+
+        $todoStatus = $todo->update($validatedData);
 
         if ($todoStatus) {
-            //if todoStatus is true then show success
             return redirect('todo')->with('success', 'Todo successfully updated.');
         } else {
-            //if not the show error
             return redirect('todo')->with('error', 'Oops something went wrong. Todo not updated');
         }
     }
 
-    
-//delete
+
+    //delete
     public function destroy($id)
     {
         //user_id
