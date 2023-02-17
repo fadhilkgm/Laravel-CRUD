@@ -51,7 +51,7 @@
                     <tbody>
                         @forelse ($todos as $todo)
                             <tr>
-                                <th>{{ $todo->id }}</th>
+                                <th>{{ ++$i }}</th>
                                 <td>{{ $todo->title }}</td>
                                 <td>
                                     <center>{{ $todo->status }}</center>

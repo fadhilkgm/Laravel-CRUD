@@ -16,7 +16,7 @@ class TodoController extends Controller
         //getting the todos of that user
         $todos = Todo::where(['user_id' => $userId])->get();
         //returning the todos
-        return view('todo.list', ['todos' => $todos]);
+        return view('todo.list', ['todos' => $todos])->with('i');
     }
 
     //creation of todos
